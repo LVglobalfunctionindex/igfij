@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Расчет индекса глобальной функции левого желудочка</title>
+		<meta charset="utf-8">
+		<style>
+			body {width: 100vw;padding:0;margin:0;min-height:100vh;font-size: 20px;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;}
+			h1 {width:100%;text-align: center;}
+			div.formula {display:block;font-style: italic;font-size:1.2em;max-width:100vw;}
+			div.formula svg {max-width:90vw;}
+			div#form label {width:5em;display: inline-block;text-align: right;}
+			h2#result {display:inline;}
+		</style>
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+		<script id="MathJax-script" async src="./assets/MathJax/tex-svg.js"></script>
+		<script>
+
+			window.MathJax = {
+				loader: {load: ["input/tex", "output/svg"]},
+				tex: {
+					inlineMath: [['$', '$'], ['\\(', '\\)']]
+				},
+				svg: {
+					fontCache: 'global'
+				}
+			};
+
+			function assemble(){
+				var uo = parseFloat(document.querySelector("input[name='uo']").value)
+				var kdo = parseFloat(document.querySelector("input[name='kdo']").value)
+				var kso = parseFloat(document.querySelector("input[name='kso']").value)
+				var mm = parseFloat(document.querySelector("input[name='mm']").value)
+
+				var igflj = ( uo/((  (kdo + kso)/2    )+mm*1.05) )*100;
+				
+				document.querySelector('h2#result').innerHTML = Math.round(igflj);
+
+			}
+
+			function eventManager(){
+				document.querySelector("input[name='uo']").addEventListener("input", function(e){assemble();});
+				document.querySelector("input[name='kdo']").addEventListener("input", function(e){assemble();});
+				document.querySelector("input[name='kso']").addEventListener("input", function(e){assemble();});
+				document.querySelector("input[name='mm']").addEventListener("input", function(e){assemble();});
+				document.querySelector("div#form button").addEventListener("click", function(e){assemble();});
+			}
+
+
+			window.addEventListener("DOMContentLoaded", (event) => {
+				console.log("DOM fully loaded and parsed");
+				eventManager();
+				assemble();
+			});
+		</script>
+	</head>
+	<body>
+		<h1>Расчет индекса глобальной функции левого желудочка</h1>
+		<div class="formula">$$ИГФ\ ЛЖ = {{УО \over { {{КДО\ ЛЖ\ +\ КСО\ ЛЖ} \over 2} +\ ММ\ ЛЖ\ *1,05}}*100\%}$$</div>
+
+		<ul>
+			<li><strong>УО</strong> - ударный объем в мл</li>
+			<li><strong>КДО ЛЖ</strong> - конечно-диастолический объем в мл</li>
+			<li><strong>КСО ЛЖ</strong> - конечно-систолический объем в мл</li>
+			<li><strong>ММ ЛЖ</strong> - масса миокарда левого желудочка в гр</li>
+		</ul>
+
+		<div id="form">
+			<div class="control"><label>УО</label> <input name="uo" placeholder="68" value="68"> мл</div>
+			<div class="control"><label>КДО ЛЖ</label> <input name="kdo" placeholder="111" value="111"> мл</div>
+			<div class="control"><label>КСО ЛЖ</label> <input name="kso" placeholder="43" value="43"> мл</div>
+			<div class="control"><label>ММ ЛЖ</label> <input name="mm" placeholder="147" value="147"> гр</div>
+			<div class="control"><label></label> <button>Рассчитать</button></div>
+			
+			<div class="control"><label>Результат</label> <h2 id="result">0</h2></div>
+		</div>
+
+
+
+
+	</body>
+</html>
