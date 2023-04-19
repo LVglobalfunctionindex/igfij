@@ -28,19 +28,23 @@
 			};
 
 			function assemble(){
-				var uo = parseFloat(document.querySelector("input[name='uo']").value)
 				var kdo = parseFloat(document.querySelector("input[name='kdo']").value)
 				var kso = parseFloat(document.querySelector("input[name='kso']").value)
+				var uo = kdo-kso;
 				var mm = parseFloat(document.querySelector("input[name='mm']").value)
 
 				var igflj = ( uo/((  (kdo + kso)/2    )+mm*1.05) )*100;
+
 				
-				document.querySelector('h2#result').innerHTML = Math.round(igflj);
+
+				if (!isNaN(igflj)) {
+					document.querySelector('h2#result').innerHTML = Math.round(igflj);
+				}
 
 			}
 
 			function eventManager(){
-				document.querySelector("input[name='uo']").addEventListener("input", function(e){assemble();});
+				// document.querySelector("input[name='uo']").addEventListener("input", function(e){assemble();});
 				document.querySelector("input[name='kdo']").addEventListener("input", function(e){assemble();});
 				document.querySelector("input[name='kso']").addEventListener("input", function(e){assemble();});
 				document.querySelector("input[name='mm']").addEventListener("input", function(e){assemble();});
@@ -51,7 +55,7 @@
 			window.addEventListener("DOMContentLoaded", (event) => {
 				console.log("DOM fully loaded and parsed");
 				eventManager();
-				assemble();
+				// assemble();
 			});
 		</script>
 	</head>
@@ -70,10 +74,10 @@
 			<hr>
 			<div class="control"><label>Результат</label> <h2 id="result">0</h2></div>
 			<hr>
-			<div class="control"><label>УО</label> <input name="uo" placeholder="68" value="68"> мл</div>
-			<div class="control"><label>КДО ЛЖ</label> <input name="kdo" placeholder="111" value="111"> мл</div>
-			<div class="control"><label>КСО ЛЖ</label> <input name="kso" placeholder="43" value="43"> мл</div>
-			<div class="control"><label>ММ ЛЖ</label> <input name="mm" placeholder="147" value="147"> гр</div>
+			<!-- <div class="control"><label>УО</label> <input name="uo" placeholder="" value=""> мл</div> -->
+			<div class="control"><label>КДО ЛЖ</label> <input name="kdo" placeholder="" value=""> мл</div>
+			<div class="control"><label>КСО ЛЖ</label> <input name="kso" placeholder="" value=""> мл</div>
+			<div class="control"><label>ММ ЛЖ</label> <input name="mm" placeholder="" value=""> гр</div>
 			<br>
 			<div class="control"><label></label> <button>Рассчитать</button></div>
 			
